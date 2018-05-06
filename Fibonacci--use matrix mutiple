@@ -1,0 +1,66 @@
+import java.util.*;
+import java.math.BigInteger;
+
+public class fib3 {
+	public static void main(String[] args){
+		Scanner sc=new Scanner(System.in);
+		while(sc.hasNext()){
+			int n=sc.nextInt();
+			BigInteger a[][]=new BigInteger[2][1],result[][]={{BigInteger.ZERO,BigInteger.ZERO},{BigInteger.ZERO,BigInteger.ZERO}};
+			BigInteger c=BigInteger.ZERO;
+			a[0][0]=BigInteger.ZERO;
+			a[1][0]=BigInteger.ONE;
+			if(n==1){
+			System.out.println(1);
+			}
+			else if(n==0){
+				System.out.println(0);
+			}else{
+				add1(a,result,n-1);
+				for(int i=0;i<2;i++){
+					BigInteger temp=BigInteger.ZERO;
+					for(int j=0;j<2;j++){
+						temp=c.add(result[i][j].multiply(a[i][0]));
+					}
+					c=temp;
+				}
+				System.out.println(c);
+			}		
+		}
+	}
+	static void add1(BigInteger a[][],BigInteger result[][],int n){
+		BigInteger b[][]={{BigInteger.ZERO,BigInteger.ONE},{BigInteger.ONE,BigInteger.ONE}};
+		BigInteger r=BigInteger.ZERO,zero[][]={{BigInteger.ZERO,BigInteger.ZERO},{BigInteger.ZERO,BigInteger.ZERO}};
+		a[0][0]=BigInteger.ZERO;
+		a[1][0]=BigInteger.ONE;
+		if(n==1){
+			for(int i=0;i<2;i++)
+				for(int j=0;j<2;j++)
+					result[i][j]=BigInteger.ONE;
+		}
+		else if(n>1){
+			for(int k=0;k<2;k++){
+				for(int j=0;j<2;j++){
+					for(int i=0;i<2;i++){
+						result[k][j]=result[k][j].add(b[k][i].multiply(b[i][j]));
+					}
+				}
+			}
+		}
+		if(n>2){
+			for(int m=0;m<n-2;m++){
+				BigInteger[][] temp={{BigInteger.ZERO,BigInteger.ZERO},{BigInteger.ZERO,BigInteger.ZERO}};
+				for(int k=0;k<2;k++){
+					for(int j=0;j<2;j++){
+						for(int i=0;i<2;i++){
+							temp[k][j]=temp[k][j].add(result[k][i].multiply(b[i][j]));
+						}
+					}
+				}
+				for(int j=0;j<2;j++)
+					for(int i=0;i<2;i++)
+						result[j][i]=temp[j][i];
+			}
+		}
+	}
+}
